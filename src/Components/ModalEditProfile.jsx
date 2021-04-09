@@ -43,6 +43,7 @@ class ModalEditProfile extends React.Component {
         }
       );
       if (response.ok) {
+        console.log(response)
         console.log("files uploaded");
       } else {
         console.log("there is something wrong");
