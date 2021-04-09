@@ -13,6 +13,7 @@ export default class ModalPost extends Component {
   state = {
     selectedFile: null,
     myNewPost: { text: "" },
+    postID: "",
   };
 
   handleInput = (e) => {
@@ -30,9 +31,9 @@ export default class ModalPost extends Component {
     });
   };
 
-  postImage = async (postId) => {
+  postImage = async (e, postId) => {
     const fd = new FormData();
-    fd.append("profile", this.state.selectedFile);
+    fd.append("post", this.state.selectedFile);
     const andisToken =
       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDZjMGM5YzZmZDIyODAwMTUzZmRiYWMiLCJpYXQiOjE2MTc2OTM4NTIsImV4cCI6MTYxODkwMzQ1Mn0.b_4i8l9HxOmAylxIxWyK1cX9Brjnydu_my16UsNd4PE";
 
@@ -48,21 +49,20 @@ export default class ModalPost extends Component {
         }
       );
       if (response.ok) {
-        console.log("image uploaded");
+        this.props.onHide(false);
+        alert("image uploaded");
       } else {
-        console.log("there is something wrong");
+        alert("there is something wrong with image load");
       }
     } catch (error) {
       console.log(error);
     }
   };
 
-  // fileUploadHandler = async (e) => {
-  //   e.preventDefault();
-
-  //   //console.log(this.state.selectedFile);
-  //   await this.postImage();
-  // };
+  fileUploadHandler = async (e, userID) => {
+    e.preventDefault();
+    this.postImage(userID);
+  };
 
   newPost = async (e) => {
     e.preventDefault();
@@ -82,9 +82,12 @@ export default class ModalPost extends Component {
       );
       if (resp.ok) {
         //get POST ID and past down to fecthPost to Image
-        console.log(resp);
+        let body = await resp.json();
+        console.log(body._id);
+        await this.postImage(e, body._id);
         alert("your post has been send");
-        this.props.onHide(false);
+        // this.fileUploadHandler(e);
+        // this.props.onHide(false);
       } else {
         alert("there was a problem with your Post");
       }
@@ -202,15 +205,17 @@ export default class ModalPost extends Component {
               />
             </Form.Group>
             <Modal.Footer>
+
+              <Alert variant="secondary" > who can comment</Alert>
+              <Form.Group>
+                <Form.File
+                  accept="image/*"
+                  onChange={this.fileSelectedHandler}
+                  label="Choose an image file"
+                />
+              </Form.Group>
               <Row>
                 <Col xs={3} className="d-flex justify-content-around">
-                  {/* <Form.Group>
-                    <Form.File
-                      accept="image/*"
-                      onChange={this.fileSelectedHandler}
-                      label="Choose an image file"
-                    />
-                  </Form.Group> */}
                   <div className="pl-1">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
