@@ -11,7 +11,6 @@ import {
 
 export default class ModalPost extends Component {
   state = {
-    isEditing: false,
     selectedFile: null,
     myNewPost: { text: "" },
   };
@@ -26,53 +25,43 @@ export default class ModalPost extends Component {
   };
 
   fileSelectedHandler = (e) => {
-    const file = e.target.files[0];
-    console.log(file);
+    this.setState({
+      selectedFile: e.target.files[0],
+    });
   };
 
-  handleEditing = () => {
-    //console.log(this.props.postToEdit);
-    if (this.props.postToEdit && this.props.show) {
-      this.setState({
-        isEditing: true,
-        myNewPost: {
-          text: this.props.postToEdit.text,
-        },
-      });
-    } else {
-      this.setState({
-        isEditing: false,
-        myNewPost: {
-          text: "",
-        },
-      });
+  postImage = async (postId) => {
+    const fd = new FormData();
+    fd.append("profile", this.state.selectedFile);
+    const andisToken =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDZjMGM5YzZmZDIyODAwMTUzZmRiYWMiLCJpYXQiOjE2MTc2OTM4NTIsImV4cCI6MTYxODkwMzQ1Mn0.b_4i8l9HxOmAylxIxWyK1cX9Brjnydu_my16UsNd4PE";
+
+    try {
+      let response = await fetch(
+        `https://striveschool-api.herokuapp.com/api/posts/${postId}`,
+        {
+          method: "POST",
+          body: fd,
+          headers: {
+            authorization: "Bearer " + andisToken,
+          },
+        }
+      );
+      if (response.ok) {
+        console.log("image uploaded");
+      } else {
+        console.log("there is something wrong");
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
-  // uploadHandler = (postId) => {
-  //   const andisToken =
-  //       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDZjMGM5YzZmZDIyODAwMTUzZmRiYWMiLCJpYXQiOjE2MTc2OTM4NTIsImV4cCI6MTYxODkwMzQ1Mn0.b_4i8l9HxOmAylxIxWyK1cX9Brjnydu_my16UsNd4PE";
+  // fileUploadHandler = async (e) => {
+  //   e.preventDefault();
 
-  //   const url = "https://striveschool-api.herokuapp.com/api/posts/{postId}"
-  //   const formData = new FormData();
-  //   formData.append(
-  //     "myFile",
-  //     this.state.selectedFile,
-  //     this.state.selectedFile.name
-  //   );
-  //  fetch(url,{
-  //   method: "POST",
-  //   body: JSON.stringify(this.state.selectedFile),
-  //   headers: {
-  //     "Content-type": "application/json",
-  //     Authorization: "Bearer " + andisToken,
-  //   }}).then(resp => {if (resp.ok) {
-  //     alert("your post has upload ");
-  //     this.props.onHide(false);
-  //   } else {
-  //     alert("there was a problem with your Post");
-  //   }}).catch(error=>{ console.log(error);
-  //     alert(error);})
+  //   //console.log(this.state.selectedFile);
+  //   await this.postImage();
   // };
 
   newPost = async (e) => {
@@ -105,19 +94,15 @@ export default class ModalPost extends Component {
     }
   };
 
-  componentDidMount = () => {
-    this.handleEditing();
-  };
-
   componentDidUpdate = (prevProps) => {
     // console.log('THIS IS prevProps: ', prevProps);
     // console.log('THIS IS this.props: ', this.props);
-    if (prevProps.postToEdit !== this.props.postToEdit) {
+    if (prevProps.posttoedit !== this.props.posttoedit) {
       //console.log('!!!!!', this.props.expToEdit);
       this.setState({
         myNewPost: {
-          _id: this.props.postToEdit._id,
-          text: this.props.postToEdit.text,
+          _id: this.props.posttoedit._id,
+          text: this.props.posttoedit.text,
         },
       });
     }
@@ -129,7 +114,7 @@ export default class ModalPost extends Component {
   //     const andisToken =
   //       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDZjMGM5YzZmZDIyODAwMTUzZmRiYWMiLCJpYXQiOjE2MTc2OTM4NTIsImV4cCI6MTYxODkwMzQ1Mn0.b_4i8l9HxOmAylxIxWyK1cX9Brjnydu_my16UsNd4PE';
   //     let resp = await fetch(
-  //       `https://striveschool-api.herokuapp.com/api/profile/${this.props.userID}/experiences/${this.props.expToEdit._id}`,
+  //       `https://striveschool-api.herokuapp.com/api/profile/${this.props.userID}/experiences/${this.props.exptoedit._id}`,
   //       {
   //         method: 'PUT',
   //         body: JSON.stringify(this.state.myNewExp),
@@ -201,8 +186,8 @@ export default class ModalPost extends Component {
           </Row>
           <Form
             className="mx-3 mt-2"
-            onSubmit={() => {
-              this.newPost();
+            onSubmit={(e) => {
+              this.newPost(e);
             }}
           >
             <Form.Group>
@@ -219,6 +204,13 @@ export default class ModalPost extends Component {
             <Modal.Footer>
               <Row>
                 <Col xs={3} className="d-flex justify-content-around">
+                  {/* <Form.Group>
+                    <Form.File
+                      accept="image/*"
+                      onChange={this.fileSelectedHandler}
+                      label="Choose an image file"
+                    />
+                  </Form.Group> */}
                   <div className="pl-1">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
