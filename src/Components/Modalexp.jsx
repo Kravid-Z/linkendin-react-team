@@ -15,39 +15,39 @@ class Modalforex extends React.Component {
     },
   };
 
-  // handleEditing = () => {
-  //   console.log(this.props.exptoedit);
-  //   if (this.props.exptoedit) {
-  //     this.setState({
-  //       isEditing: true,
-  //       myNewExp: {
-  //         role: this.props.exptoedit.role,
-  //         company: this.props.exptoedit.company,
-  //         startDate: this.props.exptoedit.startDate,
-  //         endDate: this.props.exptoedit.endDate,
-  //         description: this.props.exptoedit.description,
-  //         area: this.props.exptoedit.area,
-  //         image: this.props.exptoedit.image,
-  //       },
-  //     });
-  //   } else {
-  //     this.setState({
-  //       isEditing: false,
-  //       myNewExp: {
-  //         role: "",
-  //         company: "",
-  //         startDate: "",
-  //         endDate: "",
-  //         description: "",
-  //         area: "",
-  //         image: "https://picsum.photos/200",
-  //       },
-  //     });
-  //   }
-  // };
-  // componentDidMount = () => {
-  //   this.handleEditing();
-  // };
+  handleEditing = () => {
+    console.log(this.props.exptoedit);
+    if (this.props.exptoedit) {
+      this.setState({
+        isEditing: true,
+        myNewExp: {
+          role: this.props.exptoedit.role,
+          company: this.props.exptoedit.company,
+          startDate: this.props.exptoedit.startDate,
+          endDate: this.props.exptoedit.endDate,
+          description: this.props.exptoedit.description,
+          area: this.props.exptoedit.area,
+          image: this.props.exptoedit.image,
+        },
+      });
+    } else {
+      this.setState({
+        isEditing: false,
+        myNewExp: {
+          role: "",
+          company: "",
+          startDate: "",
+          endDate: "",
+          description: "",
+          area: "",
+          image: "https://picsum.photos/200",
+        },
+      });
+    }
+  };
+  componentDidMount = () => {
+    this.handleEditing();
+  };
 
   componentDidUpdate = (prevProps) => {
     console.log("THIS IS prevProps: ", prevProps);
@@ -155,9 +155,8 @@ class Modalforex extends React.Component {
           <Form
             className="mx-3 mt-1"
             onSubmit={
-              this.state.exptoedit._id === undefined
-                ? this.postNewExp
-                : this.putExp
+        this.postNewExp
+
             }
           >
             <Form.Group>

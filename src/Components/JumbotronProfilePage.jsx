@@ -25,7 +25,7 @@ export default function Hero({ thisUser }) {
             className={styles.borderRound}
             src={thisUser.image}
             alt="profile pic"
-            style={({ width: "180px" }, { height: "180px" })}
+            style={({ width: "180px" ,  height: "180px" , objectFit: 'cover'})}
           />
         </div>
         <Card.Title className="mt-2">

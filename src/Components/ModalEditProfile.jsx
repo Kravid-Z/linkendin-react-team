@@ -67,7 +67,7 @@ class ModalEditProfile extends React.Component {
   render() {
     return (
       <>
-        <Button variant="primary" onClick={this.setModalShowTrue}>
+        <Button className="mx-2 rounded-pill" variant="outline-secondary" onClick={this.setModalShowTrue}>
           Launch demo modal
         </Button>
 
