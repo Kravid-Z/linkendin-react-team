@@ -2,27 +2,27 @@ import React, { Component } from "react";
 import { Container, Col, Row } from "react-bootstrap";
 import ModalPost from "../Components/ModalPost";
 import RightBar from "../Components/RightBar";
-import NewsFeed from '../Components/NewsFeed'
+import NewsFeed from "../Components/NewsFeed";
 import StartPost from "../Components/StartPost";
-import LSideBar from '../Components/LSideBar'
+import LSideBar from "../Components/LSideBar";
 class Homepage extends Component {
   state = {
     arrOfPost: [],
     userData: {},
-    postToEdit: {},
+    posttoedit: {},
     modalShow: false,
   };
 
   getPostData = async () => {
     const andisToken =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDZjMGM5YzZmZDIyODAwMTUzZmRiYWMiLCJpYXQiOjE2MTc2OTM4NTIsImV4cCI6MTYxODkwMzQ1Mn0.b_4i8l9HxOmAylxIxWyK1cX9Brjnydu_my16UsNd4PE';
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDZjMGM5YzZmZDIyODAwMTUzZmRiYWMiLCJpYXQiOjE2MTc2OTM4NTIsImV4cCI6MTYxODkwMzQ1Mn0.b_4i8l9HxOmAylxIxWyK1cX9Brjnydu_my16UsNd4PE";
 
     try {
       let resp = await fetch(
-        'https://striveschool-api.herokuapp.com/api/posts/',
+        "https://striveschool-api.herokuapp.com/api/posts/",
         {
           headers: {
-            Authorization: 'Bearer ' + andisToken,
+            Authorization: "Bearer " + andisToken,
           },
         }
       );
@@ -34,7 +34,7 @@ class Homepage extends Component {
           arrOfPost: postData,
         });
       } else {
-        alert('something wrong in the code');
+        alert("something wrong in the code");
       }
     } catch (err) {
       console.log(err);
@@ -44,14 +44,14 @@ class Homepage extends Component {
 
   getMyData = async () => {
     const andisToken =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDZjMGM5YzZmZDIyODAwMTUzZmRiYWMiLCJpYXQiOjE2MTc2OTM4NTIsImV4cCI6MTYxODkwMzQ1Mn0.b_4i8l9HxOmAylxIxWyK1cX9Brjnydu_my16UsNd4PE';
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDZjMGM5YzZmZDIyODAwMTUzZmRiYWMiLCJpYXQiOjE2MTc2OTM4NTIsImV4cCI6MTYxODkwMzQ1Mn0.b_4i8l9HxOmAylxIxWyK1cX9Brjnydu_my16UsNd4PE";
 
     try {
       let resp = await fetch(
-        'https://striveschool-api.herokuapp.com/api/profile/me',
+        "https://striveschool-api.herokuapp.com/api/profile/me",
         {
           headers: {
-            Authorization: 'Bearer ' + andisToken,
+            Authorization: "Bearer " + andisToken,
           },
         }
       );
@@ -76,23 +76,23 @@ class Homepage extends Component {
     if (bool && postId) {
       try {
         const andisToken =
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDZjMGM5YzZmZDIyODAwMTUzZmRiYWMiLCJpYXQiOjE2MTc2OTM4NTIsImV4cCI6MTYxODkwMzQ1Mn0.b_4i8l9HxOmAylxIxWyK1cX9Brjnydu_my16UsNd4PE';
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDZjMGM5YzZmZDIyODAwMTUzZmRiYWMiLCJpYXQiOjE2MTc2OTM4NTIsImV4cCI6MTYxODkwMzQ1Mn0.b_4i8l9HxOmAylxIxWyK1cX9Brjnydu_my16UsNd4PE";
         let resp = await fetch(
           `https://striveschool-api.herokuapp.com/api/posts/${postId}`,
           {
-            method: 'GET',
+            method: "GET",
             headers: {
-              Authorization: 'Bearer ' + andisToken,
+              Authorization: "Bearer " + andisToken,
             },
           }
         );
         let data = await resp.json();
-        this.setState({ ...this.state, postToEdit: data, modalShow: bool });
+        this.setState({ ...this.state, posttoedit: data, modalShow: bool });
       } catch (error) {
         console.log(error);
       }
     } else {
-      this.setState({ modalShow: bool, postToEdit: {} });
+      this.setState({ modalShow: bool, posttoedit: {} });
     }
   };
 
@@ -104,7 +104,11 @@ class Homepage extends Component {
   render() {
     return (
       <Container>
-        <ModalPost postToEdit={this.state.postToEdit} show={this.state.modalShow} onHide={this.setModalShow} />
+        <ModalPost
+          posttoedit={this.state.posttoedit}
+          show={this.state.modalShow}
+          onHide={this.setModalShow}
+        />
         <Row>
           <Col xs={2}>
             <LSideBar user={this.state.userData} />
