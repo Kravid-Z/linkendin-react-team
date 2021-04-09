@@ -14,7 +14,7 @@ export default class ProfilePage extends Component {
     userData: {},
     expData: [],
     modalShow: false,
-    expToEdit: {},
+    exptoedit: {},
   };
 
   setModalShow = async (bool, ExpID) => {
@@ -32,12 +32,12 @@ export default class ProfilePage extends Component {
           }
         );
         let data = await resp.json();
-        this.setState({ ...this.state, expToEdit: data, modalShow: bool });
+        this.setState({ ...this.state, exptoedit: data, modalShow: bool });
       } catch (error) {
         console.log(error);
       }
     } else {
-      this.setState({ modalShow: bool, expToEdit:{} });
+      this.setState({ modalShow: bool, exptoedit:{} });
     }
   };
   
@@ -99,7 +99,7 @@ export default class ProfilePage extends Component {
     return (
       <Container>
         <Modalexp
-          expToEdit={this.state.expToEdit}
+          exptoedit={this.state.exptoedit}
           userID={this.state.userData._id}
           show={this.state.modalShow}
           onHide={this.setModalShow}
