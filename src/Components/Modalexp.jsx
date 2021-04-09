@@ -1,69 +1,69 @@
-import { Button, Modal, Form } from 'react-bootstrap';
-import React from 'react';
+import { Button, Modal, Form } from "react-bootstrap";
+import React from "react";
 
 class Modalforex extends React.Component {
   state = {
     isEditing: false,
     myNewExp: {
-      role: '',
-      company: '',
-      startDate: '',
-      endDate: '',
-      description: '',
-      area: '',
-      image: 'https://picsum.photos/200',
+      role: "",
+      company: "",
+      startDate: "",
+      endDate: "",
+      description: "",
+      area: "",
+      image: "https://picsum.photos/200",
     },
   };
 
-  handleEditing = () => {
-    console.log(this.props.expToEdit);
-    if (this.props.expToEdit) {
-      this.setState({
-        isEditing: true,
-        myNewExp: {
-          role: this.props.expToEdit.role,
-          company: this.props.expToEdit.company,
-          startDate: this.props.expToEdit.startDate,
-          endDate: this.props.expToEdit.endDate,
-          description: this.props.expToEdit.description,
-          area: this.props.expToEdit.area,
-          image: this.props.expToEdit.image,
-        },
-      });
-    } else {
-      this.setState({
-        isEditing: false,
-        myNewExp: {
-          role: '',
-          company: '',
-          startDate: '',
-          endDate: '',
-          description: '',
-          area: '',
-          image: 'https://picsum.photos/200',
-        },
-      });
-    }
-  };
-  componentDidMount = () => {
-    this.handleEditing();
-  };
+  // handleEditing = () => {
+  //   console.log(this.props.exptoedit);
+  //   if (this.props.exptoedit) {
+  //     this.setState({
+  //       isEditing: true,
+  //       myNewExp: {
+  //         role: this.props.exptoedit.role,
+  //         company: this.props.exptoedit.company,
+  //         startDate: this.props.exptoedit.startDate,
+  //         endDate: this.props.exptoedit.endDate,
+  //         description: this.props.exptoedit.description,
+  //         area: this.props.exptoedit.area,
+  //         image: this.props.exptoedit.image,
+  //       },
+  //     });
+  //   } else {
+  //     this.setState({
+  //       isEditing: false,
+  //       myNewExp: {
+  //         role: "",
+  //         company: "",
+  //         startDate: "",
+  //         endDate: "",
+  //         description: "",
+  //         area: "",
+  //         image: "https://picsum.photos/200",
+  //       },
+  //     });
+  //   }
+  // };
+  // componentDidMount = () => {
+  //   this.handleEditing();
+  // };
 
   componentDidUpdate = (prevProps) => {
-    console.log('THIS IS prevProps: ', prevProps);
-    console.log('THIS IS this.props: ', this.props);
-    if (prevProps.expToEdit !== this.props.expToEdit) {
-      console.log('!!!!!', this.props.expToEdit)
+    console.log("THIS IS prevProps: ", prevProps);
+    console.log("THIS IS this.props: ", this.props);
+    if (prevProps.exptoedit !== this.props.exptoedit) {
+      console.log("!!!!!", this.props.exptoedit);
       this.setState({
         myNewExp: {
-          _id: this.props.expToEdit._id,
-          role: this.props.expToEdit.role,
-          company: this.props.expToEdit.company,
-          startDate: this.props.expToEdit.startDate,
-          endDate: this.props.expToEdit.endDate,
-          description: this.props.expToEdit.description,
-          area: this.props.expToEdit.area,
-          image: this.props.expToEdit.image,
+          _id: this.props.exptoedit._id,
+          role: this.props.exptoedit.role,
+          company: this.props.exptoedit.company,
+          startDate: this.props.exptoedit.startDate,
+          endDate: this.props.exptoedit.endDate,
+          description: this.props.exptoedit.description,
+          area: this.props.exptoedit.area,
+          image: this.props.exptoedit.image,
         },
       });
     }
@@ -82,28 +82,28 @@ class Modalforex extends React.Component {
   };
 
   postNewExp = async (e) => {
-    console.log('event: ' + e);
+    console.log("event: " + e);
     e.preventDefault();
     try {
       const andisToken =
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDZjMGM5YzZmZDIyODAwMTUzZmRiYWMiLCJpYXQiOjE2MTc2OTM4NTIsImV4cCI6MTYxODkwMzQ1Mn0.b_4i8l9HxOmAylxIxWyK1cX9Brjnydu_my16UsNd4PE';
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDZjMGM5YzZmZDIyODAwMTUzZmRiYWMiLCJpYXQiOjE2MTc2OTM4NTIsImV4cCI6MTYxODkwMzQ1Mn0.b_4i8l9HxOmAylxIxWyK1cX9Brjnydu_my16UsNd4PE";
       let resp = await fetch(
         `https://striveschool-api.herokuapp.com/api/profile/${this.props.userID}/experiences`,
         {
-          method: 'POST',
+          method: "POST",
           body: JSON.stringify(this.state.myNewExp),
           headers: {
-            'Content-type': 'application/json',
-            Authorization: 'Bearer ' + andisToken,
+            "Content-type": "application/json",
+            Authorization: "Bearer " + andisToken,
           },
         }
       );
       if (resp.ok) {
-        alert('your exp has been saved');
+        alert("your exp has been saved");
         this.props.onHide(false);
         this.props.getMyExp();
       } else {
-        alert('there was a problem');
+        alert("there was a problem");
       }
     } catch (error) {
       console.log(error);
@@ -111,51 +111,61 @@ class Modalforex extends React.Component {
     }
   };
 
-  putExp= async (e) => {
+  putExp = async (e) => {
     e.preventDefault();
     try {
       const andisToken =
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDZjMGM5YzZmZDIyODAwMTUzZmRiYWMiLCJpYXQiOjE2MTc2OTM4NTIsImV4cCI6MTYxODkwMzQ1Mn0.b_4i8l9HxOmAylxIxWyK1cX9Brjnydu_my16UsNd4PE';
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDZjMGM5YzZmZDIyODAwMTUzZmRiYWMiLCJpYXQiOjE2MTc2OTM4NTIsImV4cCI6MTYxODkwMzQ1Mn0.b_4i8l9HxOmAylxIxWyK1cX9Brjnydu_my16UsNd4PE";
       let resp = await fetch(
-        `https://striveschool-api.herokuapp.com/api/profile/${this.props.userID}/experiences/${this.props.expToEdit._id}`,
+        `https://striveschool-api.herokuapp.com/api/profile/${this.props.userID}/experiences/${this.props.exptoedit._id}`,
         {
-          method: 'PUT',
+          method: "PUT",
           body: JSON.stringify(this.state.myNewExp),
           headers: {
-            'Content-type': 'application/json',
-            Authorization: 'Bearer ' + andisToken,
+            "Content-type": "application/json",
+            Authorization: "Bearer " + andisToken,
           },
         }
       );
       if (resp.ok) {
-        alert('your exp has been saved');
+        alert("your exp has been saved");
         this.props.onHide(false);
         this.props.getMyExp();
       } else {
-        alert('there was a problem');
+        alert("there was a problem");
       }
     } catch (error) {
       console.log(error);
       alert(error);
     }
-  }
+  };
 
-  
   render() {
-    //console.log(this.props.expToEdit);
+    //console.log(this.props.exptoedit);
     return (
       <>
         <Modal {...this.props}>
-          <Modal.Header closeButton className='mt-1'>
-            <Modal.Title>{this.state.isEditing ? 'Edit your experience' : 'Add an experience'}</Modal.Title>
+          <Modal.Header closeButton className="mt-1">
+            <Modal.Title>
+              {this.state.isEditing
+                ? "Edit your experience"
+                : "Add an experience"}
+            </Modal.Title>
           </Modal.Header>
-          <Form className='mx-3 mt-1' onSubmit={this.state.isEditing ? this.putExp : this.postNewExp}>
+          <Form
+            className="mx-3 mt-1"
+            onSubmit={
+              this.state.exptoedit._id === undefined
+                ? this.postNewExp
+                : this.putExp
+            }
+          >
             <Form.Group>
               <Form.Label>Role</Form.Label>
               <Form.Control
-                type='text'
-                placeholder='Role'
-                id='role'
+                type="text"
+                placeholder="Role"
+                id="role"
                 onChange={this.handleInput}
                 value={this.state.myNewExp.role}
               />
@@ -163,28 +173,28 @@ class Modalforex extends React.Component {
             <Form.Group>
               <Form.Label>Company</Form.Label>
               <Form.Control
-                type='text'
-                placeholder='Company'
-                id='company'
+                type="text"
+                placeholder="Company"
+                id="company"
                 onChange={this.handleInput}
                 value={this.state.myNewExp.company}
               />
             </Form.Group>
-            <div className='row'>
-              <Form.Group className='ml-3'>
+            <div className="row">
+              <Form.Group className="ml-3">
                 <Form.Label>start date</Form.Label>
                 <Form.Control
-                  type='date'
-                  id='startDate'
+                  type="date"
+                  id="startDate"
                   onChange={this.handleInput}
                   value={this.state.myNewExp.startDate}
                 />
               </Form.Group>
-              <Form.Group className='ml-5'>
+              <Form.Group className="ml-5">
                 <Form.Label>End date</Form.Label>
                 <Form.Control
-                  type='date'
-                  id='endDate'
+                  type="date"
+                  id="endDate"
                   onChange={this.handleInput}
                   value={this.state.myNewExp.endDate}
                 />
@@ -193,9 +203,9 @@ class Modalforex extends React.Component {
             <Form.Group>
               <Form.Label>Description</Form.Label>
               <Form.Control
-                as='textarea'
+                as="textarea"
                 rows={3}
-                id='description'
+                id="description"
                 onChange={this.handleInput}
                 value={this.state.myNewExp.description}
               />
@@ -203,9 +213,9 @@ class Modalforex extends React.Component {
             <Form.Group>
               <Form.Label>Area</Form.Label>
               <Form.Control
-                type='text'
-                placeholder='Area'
-                id='area'
+                type="text"
+                placeholder="Area"
+                id="area"
                 onChange={this.handleInput}
                 value={this.state.myNewExp.area}
               />
@@ -213,14 +223,14 @@ class Modalforex extends React.Component {
 
             <Modal.Footer>
               <Button
-                variant='secondary'
+                variant="secondary"
                 onClick={() => {
                   this.props.onHide(false);
                 }}
               >
                 Close
               </Button>
-              <Button variant='primary' type='submit'>
+              <Button variant="primary" type="submit">
                 Save
               </Button>
             </Modal.Footer>
