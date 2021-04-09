@@ -93,7 +93,7 @@ export default class ModalPost extends Component {
       );
       if (resp.ok) {
         //get POST ID and past down to fecthPost to Image
-        console.log(resp)
+        console.log(resp);
         alert("your post has been send");
         this.props.onHide(false);
       } else {
@@ -217,9 +217,6 @@ export default class ModalPost extends Component {
               />
             </Form.Group>
             <Modal.Footer>
-              <Alert variant="secondary">
-                Choose who can comment on your post
-              </Alert>
               <Row>
                 <Col xs={3} className="d-flex justify-content-around">
                   <div className="pl-1">
