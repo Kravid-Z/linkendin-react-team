@@ -1,5 +1,6 @@
 import React from "react";
-import { Col, Row, Button } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
+import styles from "../styles/footer.style.module.css";
 
 export default function ExpItem(props) {
   const deleteExp = async (userID) => {
@@ -39,16 +40,46 @@ export default function ExpItem(props) {
           <strong>{props.exp.company}</strong> <br />
           {props.exp.role}
         </Col>
-        <Col xs={2}>
-          <Button onClick={() => {deleteExp(props.userID); props.getMyExp()}} variant="danger">
-            Delete
-          </Button>
-          <Button
+        <Col
+          xs={2}
+          style={{ float: "right" }}
+          className="d-flex align-items-center flex-row-reverse justify-content-between "
+        >
+          <svg
+            className="ml-5 "
             onClick={() => props.setModalShow(true, props.exp._id)}
-            variant="success"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            data-supported-dps="24x24"
+            fill="currentColor"
+            class="mercado-match"
+            width="24"
+            height="24"
+            focusable="false"
+            style={{ cursor: "pointer" }}
           >
-            Edit
-          </Button>
+            <path d="M21.13 2.86a3 3 0 00-4.17 0l-13 13L2 22l6.19-2L21.13 7a3 3 0 000-4.16zM6.77 18.57l-1.35-1.34L16.64 6 18 7.35z"></path>
+          </svg>
+          <svg
+            className={styles.yok}
+            style={{ height: "20px", width: "20px" }}
+            onClick={() => {
+              deleteExp(props.userID);
+              props.getMyExp();
+            }}
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            class="bi bi-trash"
+            viewBox="0 0 16 16"
+          >
+            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+            <path
+              fill-rule="evenodd"
+              d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"
+            />
+          </svg>
         </Col>
       </Row>
     </div>

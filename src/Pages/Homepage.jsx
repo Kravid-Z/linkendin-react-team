@@ -87,15 +87,7 @@ class Homepage extends Component {
           }
         );
         let data = await resp.json();
-<<<<<<< HEAD
-        this.setState({
-          ...this.state,
-          postToEdit: data,
-          modalShow: bool,
-        });
-=======
         this.setState({ ...this.state, posttoedit: data, modalShow: bool });
->>>>>>> f061813557a10e64d9db34f1c517b784b58e1a20
       } catch (error) {
         console.log(error);
       }
@@ -113,11 +105,7 @@ class Homepage extends Component {
     return (
       <Container>
         <ModalPost
-<<<<<<< HEAD
-          postToEdit={this.state.postToEdit}
-=======
           posttoedit={this.state.posttoedit}
->>>>>>> f061813557a10e64d9db34f1c517b784b58e1a20
           show={this.state.modalShow}
           onHide={this.setModalShow}
         />
